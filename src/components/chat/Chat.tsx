@@ -149,19 +149,16 @@ const Chat: React.FC<ChatProps> = ({ darkMode }) => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
       <Box display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'} mt={'3rem'}>
         <Grid container spacing={1} marginRight={'10px'} marginLeft={'10px'}>
           <Grid item xs={12} sm={4} md={6} lg={4} display={'flex'} justifyContent={'center'}>
             <Terminal>
-              <ChatUserList id={id} chatGroupUsers={chatGroupUsers} />
+              <ChatUserList id={id} chatItem={chatItem} chatGroupUsers={chatGroupUsers} />
             </Terminal>
           </Grid>
           <Grid item xs={12} sm={8} md={6} lg={8} display={'flex'} justifyContent={'center'}>
             <Terminal>
-              <ChatTextsPanel chatItem={chatItem} messages={messages} />
+              <ChatTextsPanel messages={messages} />
             </Terminal>
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={4}>

@@ -1,32 +1,63 @@
-import { Box } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChatItem, Message } from '../../model/chat-types';
+import { useSelector } from 'react-redux';
+import { AuthState, ChatState } from '../../model/slice-types';
+import { Avatar } from '@mui/material';
 
 interface ChatTextsPanelProps {
-  chatItem: ChatItem | null;
+  // chatItem: ChatItem | null;
   messages: Message[] | null;
 }
 
-const ChatTextsPanel: React.FC<ChatTextsPanelProps> = ({ chatItem, messages }) => {
+const ChatTextsPanel: React.FC<ChatTextsPanelProps> = ({ messages }) => {
+  const { id } = useSelector((state: { auth: AuthState }) => state.auth);
+  const { chatItem } = useSelector((state: { chat: ChatState }) => state.chat);
+  const [otherUser, setOtherUser] = useState<string | null | undefined>(null);
+
+  useEffect(() => {
+    if (chatItem) {
+      const foundUser = chatItem.users.find((user) => user.id !== id);
+      setOtherUser(foundUser?.fullname);
+    }
+
+  }, [chatItem]);
+
+  function stringAvatar(name: string, isUser: boolean) {
+    const initials = name == "You" ? "You" : name.split(" ").map((part) => part[0]).join("").toUpperCase();
+
+    return {
+      sx: {
+        bgcolor: isUser ? "#1A4712" : "#8E3424"
+      },
+      children: initials
+    };
+  }
+
   return (
     <>
       {chatItem ? (
         <>
           <p>
-            <span>HEAD $</span> 🗨️🗨️🗨️
+            <span className='text-sm'>messages</span> 🗨️🗨️🗨️
           </p>
-          <Box display="flex" flexDirection="row" alignItems="center">
+          <div className='flex flex-col items-start'>
             {messages && messages.length > 0 ? (
               messages.map((msg, index) => (
-                <Box key={index} display="flex" alignItems="center" marginRight="1rem">
-                  <span>{msg.senderId}</span>
-                  <span>{msg.content}</span>
-                </Box>
+                <div key={index} className='flex items-center'>
+                  <span>
+                    {msg.senderId == id ?
+                      <Avatar style={{ width: '25px', height: ' 25px', fontSize: '10px' }} {...stringAvatar("You", true)} />
+                      :
+                      <Avatar style={{ width: '25px', height: ' 25px', fontSize: '10px' }} {...stringAvatar(otherUser!, false)} />
+                    }
+                  </span>
+                  <span className='ml-2 text-lg text-white'>{msg.content}</span>
+                </div>
               ))
             ) : (
               <p>No Messages</p>
             )}
-          </Box>
+          </div>
         </>
       ) : (
         <p>No Chats</p>
