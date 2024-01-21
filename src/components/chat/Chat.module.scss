@@ -1,0 +1,29 @@
+@import "../../variables.modules";
+
+.chatContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: #000;
+}
+
+.pink {
+  color: $pink;
+}
+
+.green {
+  color: $green;
+}
+
+.skills {
+  columns: 1;
+  @media only screen and (min-width: 940px) {
+    columns: 2;
+  }
+
+  li {
+    margin: 0;
+    line-height: 1.75;
+  }
+}
