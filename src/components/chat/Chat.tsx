@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import SockJS from "sockjs-client/dist/sockjs";
 import Stomp from 'stompjs';
 import { chatActions } from '../../store/chat-slice';
