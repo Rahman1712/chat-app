@@ -1,9 +1,9 @@
-
-import React from 'react';
 import { chatActions } from '../../store/chat-slice';
 import { useDispatch } from 'react-redux';
 import { ChatItem, User } from '../../model/chat-types';
 import Avatar from '@mui/material/Avatar';
+import SearchForm from './SearchForm';
+import { useState } from 'react';
 
 interface ChatUserListProps {
   id: number;
@@ -13,10 +13,20 @@ interface ChatUserListProps {
 
 const ChatUserList: React.FC<ChatUserListProps> = ({ id, chatGroupUsers, chatItem }) => {
   const dispatch = useDispatch();
-
+  const [searchValue, setSearchValue] = useState<string>('');
+  
   const setActiveRoom = (roomId: string) => {
     dispatch(chatActions.setRoomId(roomId));
   }
+
+  const onSearch = (value: string) => {
+    setSearchValue(value);
+  }
+
+  const filteredUsers = chatGroupUsers.filter(chat => {
+    const fullName = getUserFullName(chat.users, id);
+    return fullName.toLowerCase().includes(searchValue.toLowerCase());
+  });
 
   function stringToColor(name: string) {
     let hash = 0;
@@ -49,20 +59,26 @@ const ChatUserList: React.FC<ChatUserListProps> = ({ id, chatGroupUsers, chatIte
 
   return (
     <>
-      {chatGroupUsers.map((chat, i) => (
-        <p
+    <div className='pb-2 overflow-hidden'>
+      <SearchForm  onSearch={onSearch}/>
+    </div>
+
+
+    {filteredUsers.map((chat, i) => (
+        <div
           key={i}
           onClick={() => {
             setActiveRoom(chat.roomId);
           }}
-          className={`flex items-center cursor-pointer text-sm ml-1 `}
+          className={`flex items-center cursor-pointer text-sm ml-1 pb-2 overflow-y-auto max-h-52`}
         >
-          <Avatar style={{width: '20px', height:' 20px', fontSize: '10px'}} {...stringAvatar(getUserFullName(chat.users, id))} />
-          <span className={`text-sm ml-1 ${chatItem && chatItem.roomId  === chat.roomId ? 'font-extrabold bg-opacity-50 text-[#36abff] bg-[#46535c] px-1' : ''}`}>
+          <Avatar style={{ width: '20px', height: '20px', fontSize: '10px' }} {...stringAvatar(getUserFullName(chat.users, id))} />
+          <span className={`text-sm ml-1 ${chatItem && chatItem.roomId === chat.roomId ? 'font-extrabold bg-opacity-50 text-[#36abff] bg-[#46535c] px-1' : 'text-white'}`}>
             {getUserFullName(chat.users, id)}
           </span>
-        </p>
+        </div>
       ))}
+      
     </>
   );
 };

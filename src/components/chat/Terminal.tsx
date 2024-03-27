@@ -34,7 +34,7 @@ function Terminal(props) {
 
       <Box
         py={{ xs: '1rem', md: '2rem' }}
-        px={{ xs: '1rem', md: '3rem' }} 
+        px={{ xs: '1rem', md: '1rem' }} 
         borderRadius={'0 0 0.5rem 0.5rem'}
         sx={{
           backgroundColor: '#27242f',

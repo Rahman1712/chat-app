@@ -12,8 +12,8 @@ import ChatTextsPanel from "./ChatTextsPanel";
 import ChatForm from "./ChatForm";
 import { ChatItem, Message, User } from "../../model/chat-types";
 import { AuthState, ChatState } from "../../model/slice-types";
-import Style from "./Chat.module.scss";
 import { themeActions } from "../../store/theme-slice";
+import AddChatUser from "./AddChatUser";
 
 const WEBSOCKET_URI = import.meta.env.VITE_WEBSOCKET_URI;
 
@@ -147,6 +147,10 @@ const Chat: React.FC<ChatProps> = ({ darkMode }) => {
     dispatch(themeActions.setNavLink("chat"));
   }, []);
 
+  const allUserIdsExceptId = chatGroupUsers.flatMap(chatItem => 
+    chatItem.users.filter(user => user.id !== id).map(user => user.id)
+  );
+
   return (
     <div>
       <Box display={'flex'} flexDirection={'column'} alignItems={'center'} justifyContent={'center'} mt={'3rem'}>
@@ -154,6 +158,8 @@ const Chat: React.FC<ChatProps> = ({ darkMode }) => {
           <Grid item xs={12} sm={4} md={6} lg={4} display={'flex'} justifyContent={'center'}>
             <Terminal>
               <ChatUserList id={id} chatItem={chatItem} chatGroupUsers={chatGroupUsers} />
+              
+              <AddChatUser id={id} chatGroupUsersIds={allUserIdsExceptId} availableUsers={availableUsers} fetchMessages={fetchMessages}/>
             </Terminal>
           </Grid>
           <Grid item xs={12} sm={8} md={6} lg={8} display={'flex'} justifyContent={'center'}>
@@ -161,7 +167,8 @@ const Chat: React.FC<ChatProps> = ({ darkMode }) => {
               <ChatTextsPanel messages={messages} />
             </Terminal>
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={4}>
+          {roomId &&
+          <Grid item xs={12}>
             <ChatForm
               id={id}
               stompClient={stompClient}
@@ -169,6 +176,7 @@ const Chat: React.FC<ChatProps> = ({ darkMode }) => {
               chatItem={chatItem!}
             />
           </Grid>
+          }
         </Grid>
       </Box>
     </div>

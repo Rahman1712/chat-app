@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ChatItem, Message } from '../../model/chat-types';
+import { Message } from '../../model/chat-types';
 import { useSelector } from 'react-redux';
 import { AuthState, ChatState } from '../../model/slice-types';
 import { Avatar } from '@mui/material';
@@ -37,12 +37,13 @@ const ChatTextsPanel: React.FC<ChatTextsPanelProps> = ({ messages }) => {
     <>
       {chatItem ? (
         <>
-          <p>
-            <span className='text-sm'>messages</span> 🗨️🗨️🗨️
-          </p>
-          <div className='flex flex-col items-start'>
-            {messages && messages.length > 0 ? (
-              messages.map((msg, index) => (
+          <div className='text-sm text-red-400 inline-flex justify-center items-baseline rounded-lg shadow-lg bg-slate-300 p-2 mb-2'>
+            <span className='mx-2 text-lg font-bold'>{otherUser}</span>
+          </div>
+
+          {messages && messages.length > 0 ? (
+            <div className='flex flex-col items-start overflow-y-auto max-h-52 min-h-52'>
+              {messages.map((msg, index) => (
                 <div key={index} className='flex items-center'>
                   <span>
                     {msg.senderId == id ?
@@ -53,14 +54,20 @@ const ChatTextsPanel: React.FC<ChatTextsPanelProps> = ({ messages }) => {
                   </span>
                   <span className='ml-2 text-lg text-white'>{msg.content}</span>
                 </div>
-              ))
-            ) : (
-              <p>No Messages</p>
-            )}
-          </div>
+              ))}
+            </div>
+          
+          ) : (
+            <p className='text-center'>
+              <span className='text-red-500 text-lg font-mono '>No Messages</span>
+            </p>
+          )}
+
         </>
       ) : (
-        <p>No Chats</p>
+        <div className='text-center'>
+          <span className=' italic font-mono text-red-500'>No Chats <b className='underline'>or</b> Select an user</span>
+        </div>
       )}
     </>
   );

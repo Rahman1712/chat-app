@@ -39,17 +39,20 @@ const ChatForm: React.FC<ChatFormProps> = ({ id, stompClient, roomId, chatItem }
   return (
 
     <>
-      <form onSubmit={handleSendMessage}>
+      <div className="w-full">
+        <form onSubmit={handleSendMessage} className='w-full flex justify-center items-center gap-2'>
 
-        <input
-          type="text"
-          placeholder="Type your message...."
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-        />
+          <input
+            type="text"
+            className='w-9/12 h-10 px-2 text-sm font-poppins border border-blue-300 rounded-lg'
+            placeholder="Type your message...."
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+          />
 
-        <button type="submit">send</button>
-      </form>
+          <button type="submit" className='bg-indigo-200 h-10 font-bold text-lg p-2 rounded-lg shadow-md hover:bg-white hover:text-indigo-950'>Send</button>
+        </form>
+      </div>
     </>
 
   );

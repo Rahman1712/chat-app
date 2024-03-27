@@ -111,7 +111,7 @@ const OtpPage: React.FC<OtpPageProps> = ({ darkMode }) => {
 
         <Box p={'0.8rem'} width={{ xs: '100%', md: '50%' }} textAlign={{ xs: 'center', md: 'left' }}>
           <Box mb={4}>
-            <h1>OTP Verification</h1>
+            <h1 className='text-xl'>OTP Verification</h1>
           </Box>
 
           <Box display="flex" flexDirection="column" alignItems={{ xs: 'center', md: 'flex-start' }}>
