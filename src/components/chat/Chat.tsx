@@ -23,7 +23,7 @@ interface ChatProps {
   darkMode: boolean;
 }
 
-const Chat: React.FC<ChatProps> = ({ darkMode }) => {
+const Chat: React.FC<ChatProps> = () => {
 
   const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
