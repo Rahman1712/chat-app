@@ -1,6 +1,11 @@
 import {Box} from "@mui/material";
 
-export default function Toggler({darkMode, handleClick}) {
+interface TogglerProps {
+   darkMode: boolean;
+   handleClick: () => void;
+}
+
+export default function Toggler({ darkMode, handleClick }: TogglerProps) {
     const transition = 'all 250ms ease'
 
    return (

@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import axios from 'axios';
 axios.defaults.withCredentials = true
 
-let store;
-export const injectStore = _store => {
-  store = _store
+let store: any;
+
+export const injectStore = (_store: any) => { 
+  store = _store;
 }
 
 const instance = axios.create({

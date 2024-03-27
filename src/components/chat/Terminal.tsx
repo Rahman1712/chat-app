@@ -1,10 +1,19 @@
 import Style from "./Terminal.module.scss";
 import classNames from "classnames";
 import { Box } from "@mui/material";
+import { ReactNode } from "react";
+
+
+interface TerminalProps {
+  children: ReactNode;
+  // Add any other props here if needed
+}
 
 const iconClass = "fa fa-circle";
 
-function Terminal(props) {
+function Terminal(props: TerminalProps) {
+  
+
   // const { content } = props;
   const { children } = props;
 
